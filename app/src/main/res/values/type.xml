@@ -1,0 +1,5 @@
+<resources>
+    <style name="TextAppearance.MaterialComponents.Body1.App">
+        <item name="fontFamily">@font/montserrat_medium</item>
+    </style>
+</resources>

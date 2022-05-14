@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Error -->
+    <!-- Labels -->
+    <string name="cast">Cast</string>
+    <string name="retry">Retry</string>
+    <string name="app_name">Personal IMDB</string>
+    <string name="lbl_synopsis">Synopsis</string>
+    <string name="similar_movies">Similar Movies</string>
+    <string name="biography">Biography</string>
+    <string name="lbl_search_movies">Search Movies</string>
+    <string name="lbl_scroll_to_top">Scroll to top</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lbl_theme">Theme</string>
+</resources>

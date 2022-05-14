@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.person.PersonFragment">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="person"
+            type="com.davidbronn.movietmdb.domain.model.PersonModel" />
+
+        <variable
+            name="vm"
+            type="com.davidbronn.movietmdb.ui.people.PeopleViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorPrimaryVariant">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvProfilePicture"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivPersonProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDob"
+                style="@style/RegularTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:text="@{person.birthDay}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvProfilePicture"
+                app:visibleGone="@{!TextUtils.isEmpty(person.birthDay)}"
+                tools:text="Born?" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPlaceOfBirth"
+                style="@style/RegularTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@{person.placeOfBirth}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDob"
+                app:visibleGone="@{!TextUtils.isEmpty(person.placeOfBirth)}"
+                tools:text="Gotham" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDeathDay"
+                style="@style/RegularTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@{person.deathDay}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPlaceOfBirth"
+                app:visibleGone="@{!TextUtils.isEmpty(person.deathDay)}"
+                tools:text="Immortal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAka"
+                style="@style/RegularTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@{person.alsoKnownAs}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDeathDay"
+                app:visibleGone="@{!TextUtils.isEmpty(person.alsoKnownAs)}"
+                tools:text="Batman, Dark Knight" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBiographyLabel"
+                style="@style/BoldTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/biography"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAka" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/biography"
+                style="@style/Description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@{person.biography}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBiographyLabel"
+                tools:text="Our greatest glory is not in ever falling, but in rising every time we fall." />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

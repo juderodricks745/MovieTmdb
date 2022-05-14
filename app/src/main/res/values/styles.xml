@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--&lt;!&ndash; Base application theme. &ndash;&gt;
+    <style name="AppTheme" parent="Base.AppTheme" />
+
+    <style name="AppTheme.OverlapSystemBar" parent="Base.AppTheme" />
+
+    <style name="Base.AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <item name="colorPrimary">@color/light_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/light_colorPrimaryDark</item>
+        <item name="colorAccent">@color/light_colorAccent</item>
+        <item name="fragment_background">@color/c_white</item>
+        <item name="titleBoldColor">@color/dark_colorPrimary</item>
+
+        &lt;!&ndash; For Android sdk versions 26+. &ndash;&gt;
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/opensans_font</item>
+        &lt;!&ndash; Target Android sdk versions < 26 and > 14. &ndash;&gt;
+        <item name="fontFamily">@font/opensans_font</item>
+        &lt;!&ndash; sets the style for the overflow button &ndash;&gt;
+        <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
+    </style>
+
+    &lt;!&ndash; This style defines the tint color of the overflow menu button &ndash;&gt;
+    <style name="actionOverflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/light_colorAccent</item>
+    </style>
+
+    <style name="MovieTitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/titleBoldColor</item>
+    </style>
+
+    <style name="MovieDetailBold">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/titleBoldColor</item>
+    </style>
+
+    <style name="MovieSubTextNoBold">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/titleBoldColor</item>
+    </style>
+
+    <style name="MovieTitleWithOutTheme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/c_white</item>
+    </style>
+
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Light" />-->
+</resources>

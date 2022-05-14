@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/moviesFragment">
+
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="com.davidbronn.movietmdb.ui.movies.MoviesFragment"
+        android:label="Movies"
+        tools:layout="@layout/movies_fragment">
+
+        <action
+            android:id="@+id/toDetails"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.davidbronn.movietmdb.ui.details.DetailsFragment"
+        android:label="{title}"
+        tools:layout="@layout/details_fragment">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+
+        <argument
+            android:name="movieID"
+            app:argType="integer" />
+
+        <argument
+            android:name="picture"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toPeople"
+            app:destination="@id/peopleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/peopleFragment"
+        android:name="com.davidbronn.movietmdb.ui.people.PeopleFragment"
+        android:label="{people}"
+        tools:layout="@layout/people_fragment">
+
+        <argument
+            android:name="people"
+            app:argType="string" />
+
+        <argument
+            android:name="peopleID"
+            app:argType="integer" />
+
+        <argument
+            android:name="peopleUrl"
+            app:argType="string" />
+    </fragment>
+</navigation>
