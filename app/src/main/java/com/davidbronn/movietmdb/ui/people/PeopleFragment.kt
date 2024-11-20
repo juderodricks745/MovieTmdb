@@ -23,20 +23,15 @@ class PeopleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return  if (!::binding.isInitialized) {
-            binding = PeopleFragmentBinding.inflate(layoutInflater)
-            binding.vm = viewModel
-            binding.lifecycleOwner = viewLifecycleOwner
-            binding.root
-        } else {
-            binding.root
-        }
+        binding = PeopleFragmentBinding.inflate(layoutInflater)
+        binding.vm = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchPerson(args.peopleID)
         binding.ivPersonProfile.setImagePosterUrlWithTitle(args.peopleUrl)
 
         viewModel.state.observe(viewLifecycleOwner) { state ->

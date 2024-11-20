@@ -1,6 +1,7 @@
 package com.davidbronn.movietmdb.ui.details
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidbronn.movietmdb.domain.model.CastItemModel
@@ -9,67 +10,55 @@ import com.davidbronn.movietmdb.domain.repository.DetailsRepository
 import com.davidbronn.movietmdb.utils.misc.Resource
 import com.davidbronn.movietmdb.utils.misc.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val repository: DetailsRepository
+    private val repository: DetailsRepository,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
+    private val movieID: Int = savedStateHandle["movieID"] ?: error("movieID not found")
 
     private val _state = SingleLiveEvent<DetailsState>()
     val state: LiveData<DetailsState> = _state
 
-    fun fetchMovieDetails(movieID: Int) {
+    fun fetchAllMovieDetails() {
         viewModelScope.launch {
-            repository.fetchMovieDetails(movieID)
-                .collect { resource ->
-                    when (resource) {
-                        is Resource.Error -> {}
-                        is Resource.Success -> {
-                            resource.data.let { data ->
-                                _state.value = DetailsState.MovieDetail(data)
-                            }
-                        }
+            combine(
+                repository.fetchMovieDetails(movieID),
+                repository.fetchSimilarMovies(movieID),
+                repository.fetchMoviesCast(movieID),
+            ) { movieDetailResource, similarMoviesResource, movieCastsResource ->
+                Triple(movieDetailResource, similarMoviesResource, movieCastsResource)
+            }.collect { (movieDetail, similarMovies, movieCasts) ->
+                when (movieDetail) {
+                    is Resource.Error -> {}
+                    is Resource.Success -> {
+                        _state.value = DetailsState.MovieDetail(movieDetail.data)
                     }
                 }
-        }
-    }
-
-    fun fetchSimilarMovies(movieID: Int) {
-        viewModelScope.launch {
-            repository.fetchSimilarMovies(movieID)
-                .collect { resource ->
-                    when (resource) {
-                        is Resource.Error -> {}
-                        is Resource.Success -> {
-                            _state.value = DetailsState.SimilarMovies(resource.data)
-                        }
+                when (similarMovies) {
+                    is Resource.Error -> {}
+                    is Resource.Success -> {
+                        _state.value = DetailsState.SimilarMovies(similarMovies.data)
                     }
                 }
-        }
-    }
-
-    fun fetchCreditsAndCasts(movieID: Int) {
-        viewModelScope.launch {
-            repository.fetchMoviesCast(movieID)
-                .collect { resource ->
-                    when (resource) {
-                        is Resource.Error -> {}
-                        is Resource.Success -> {
-                            _state.value = DetailsState.MovieCasts(resource.data)
-                        }
+                when (movieCasts) {
+                    is Resource.Error -> {}
+                    is Resource.Success -> {
+                        _state.value = DetailsState.MovieCasts(movieCasts.data)
                     }
                 }
+            }
         }
     }
 
     sealed class DetailsState {
         data class MovieDetail(val detail: DetailsModel) : DetailsState()
-        data class MovieCasts(val castModels: List<CastItemModel>) : DetailsState()
         data class SimilarMovies(val models: List<CastItemModel>) : DetailsState()
+        data class MovieCasts(val castModels: List<CastItemModel>) : DetailsState()
     }
 }

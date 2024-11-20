@@ -2,7 +2,6 @@ package com.davidbronn.movietmdb
 
 import android.app.Application
 import com.davidbronn.movietmdb.utils.misc.DebugTimberTree
-import com.google.gson.Gson
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

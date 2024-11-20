@@ -1,0 +1,113 @@
+[versions]
+
+# Gradle
+agp = "8.3.2"
+
+# Kotlin Gradle Plugin
+kotlinGradlePlugin = "1.8.0"
+
+# Dagger Hilt
+hilt = "2.51"
+hiltAndroidCompiler = "2.51"
+
+# Navigation
+nav = "2.8.4"
+
+# Material
+materialVersion = "1.12.0"
+
+# AndroidX
+coreKtxVersion = "1.15.0"
+appcompatVersion = "1.7.0"
+fragmentKtx = "1.8.5"
+constraintlayoutVersion = "2.2.0"
+
+# Networking
+retrofit = "2.11.0"
+converterGson = "2.11.0"
+loggingInterceptor = "5.0.0-alpha.5"
+
+# Lifecycle
+lifecycleExtensions = "2.2.0"
+lifecycleRuntimeKtx = "2.8.7"
+lifecycleViewmodelKtx = "2.8.7"
+
+# Coroutines
+kotlinxCoroutinesCore = "1.7.3"
+
+# Glide
+glide = "4.12.0"
+glideCompiler = "4.12.0"
+
+# Palette
+paletteKtx = "1.0.0"
+
+# Paging3
+pagingRuntimeKtx = "3.3.4"
+
+# Lottie
+lottie = "3.4.1"
+
+# Timber
+timber = "5.0.1"
+
+[libraries]
+
+# Android
+android-application = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+
+# Kotlin Gradle Plugin
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+
+# Dagger Hilt Plugin
+dagger-hilt-android-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+
+# Navigation SafeArgs
+androidx-navigation-safeargs = { group = "androidx.navigation", name = "navigation-safe-args-gradle-plugin", version.ref = "nav" }
+
+# Material
+material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+
+# AndroidX
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }
+
+# Navigation
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "nav" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "nav" }
+
+# Networking
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
+
+# Lifecycle
+androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleExtensions" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+
+# Coroutines Dependencies
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesCore" }
+
+# Glide
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glideCompiler" }
+
+# Palette
+androidx-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "paletteKtx" }
+
+# Paging3
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
+
+# Dagger Hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
+
+# Lottie
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+
+# Timber
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }

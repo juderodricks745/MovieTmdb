@@ -1,12 +1,10 @@
 package com.davidbronn.movietmdb.di
 
 import com.davidbronn.movietmdb.BuildConfig
-import com.davidbronn.movietmdb.utils.misc.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -41,18 +39,12 @@ class RemoteModule {
     @Named("QueryInterceptor")
     internal fun provideAuthInterceptor(): Interceptor {
         return Interceptor { chain ->
-            val original: Request = chain.request()
-            val originalHttpUrl: HttpUrl = original.url
-
-            val url: HttpUrl = originalHttpUrl.newBuilder()
-                .addQueryParameter(Constants.Keys.MOVIE_API_KEY, BuildConfig.MOVIE_API_KEY)
-                .build()
-
-            val requestBuilder: Request.Builder = original.newBuilder()
-                .url(url)
-
-            val request: Request = requestBuilder.build()
-            chain.proceed(request)
+            val originalRequest: Request = chain.request()
+            val requestBuilder: Request.Builder = originalRequest.newBuilder()
+                .header("accept", "application/json")
+                .header("Authorization", "Bearer ${BuildConfig.MOVIE_API_KEY}")
+            val newRequest: Request = requestBuilder.build()
+            chain.proceed(newRequest)
         }
     }
 
