@@ -16,9 +16,7 @@ import com.davidbronn.movietmdb.utils.misc.Mapper
 import com.davidbronn.movietmdb.utils.misc.Resource
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 /**

@@ -14,9 +14,7 @@ class ReposLoadStateViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.btnRetry.also {
-            it.setOnClickListener { retry.invoke() }
-        }
+        binding.btnRetry.setOnClickListener { retry.invoke() }
     }
 
     fun bind(loadState: LoadState) {

@@ -7,6 +7,9 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 }
 
+// Read me for better understanding of the code
+// https://developer.android.com/build/migrate-to-ksp#groovy
+
 android {
     compileSdk 35
     defaultConfig {
@@ -87,11 +90,4 @@ dependencies {
 
     // Timber
     implementation libs.timber
-
-    // Lottie Dependencies
-    implementation libs.lottie
-}
-
-kapt {
-    correctErrorTypes true
 }

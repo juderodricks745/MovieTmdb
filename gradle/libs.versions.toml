@@ -45,9 +45,6 @@ paletteKtx = "1.0.0"
 # Paging3
 pagingRuntimeKtx = "3.3.4"
 
-# Lottie
-lottie = "3.4.1"
-
 # Timber
 timber = "5.0.1"
 
@@ -105,9 +102,6 @@ androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", v
 # Dagger Hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
-
-# Lottie
-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 
 # Timber
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
