@@ -82,3 +82,6 @@ lint/tmp/
 
 # VSCode
 *.vscode
+
+# Claude
+*.claude
