@@ -76,6 +76,7 @@ dependencies {
 
     // Paging Dependencies
     implementation libs.androidx.paging.runtime.ktx
+    testImplementation libs.androidx.paging.testing
 
     // Glide
     implementation libs.glide
@@ -90,4 +91,14 @@ dependencies {
 
     // Timber
     implementation libs.timber
+
+    // Testing
+    testImplementation libs.junit
+    testImplementation libs.mockito.core
+    testImplementation libs.mockito.kotlin
+    testImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.androidx.core.testing
+    testImplementation libs.turbine
+
+    implementation libs.gson
 }

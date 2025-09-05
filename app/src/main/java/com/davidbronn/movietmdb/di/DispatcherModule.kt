@@ -9,6 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -20,7 +21,8 @@ object DispatcherModule {
 
     @IoDispatcher
     @Provides
-    internal fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+    @Singleton
+    fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.Default
 
     @MainDispatcher
     @Provides
