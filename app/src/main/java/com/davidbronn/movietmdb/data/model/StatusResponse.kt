@@ -1,12 +1,14 @@
 package com.davidbronn.movietmdb.data.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class StatusResponse(
-    @SerializedName("status_code")
+    @SerialName("status_code")
     var statusCode: Int = 0,
-    @SerializedName("status_message")
+    @SerialName("status_message")
     var statusMessage: String = "",
-    @SerializedName("success")
+    @SerialName("success")
     var success: Boolean = false
 )

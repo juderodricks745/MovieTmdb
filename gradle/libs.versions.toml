@@ -4,9 +4,6 @@
 agp = "8.3.2"
 
 # Kotlin Gradle Plugin
-coreTesting = "2.2.0"
-gson = "2.13.1"
-junit = "4.13.2"
 kotlinGradlePlugin = "1.8.0"
 
 # Dagger Hilt
@@ -14,8 +11,6 @@ hilt = "2.51"
 hiltAndroidCompiler = "2.51"
 
 # Navigation
-mockitoCore = "5.3.1"
-mockitoKotlin = "5.1.0"
 nav = "2.8.4"
 
 # Material
@@ -28,10 +23,8 @@ fragmentKtx = "1.8.5"
 constraintlayoutVersion = "2.2.0"
 
 # Networking
-pagingTesting = "3.2.1"
-retrofit = "2.11.0"
-converterGson = "2.11.0"
-loggingInterceptor = "5.0.0-alpha.5"
+ktor = "2.3.12"
+kotlinxSerialization = "1.6.3"
 
 # Lifecycle
 lifecycleExtensions = "2.2.0"
@@ -55,17 +48,26 @@ pagingRuntimeKtx = "3.3.4"
 timber = "5.0.1"
 turbine = "1.0.0"
 
+# Android Testing
+espresso = "3.6.1"
+androidTestRunner = "1.6.2"
+androidTestRules = "1.6.1"
+androidTestExt = "1.2.1"
+pagingTesting = "3.2.1"
+junit = "4.13.2"
+coreTesting = "2.2.0"
+mockitoCore = "5.3.1"
+mockitoKotlin = "5.1.0"
+
 [libraries]
 
 # Android
 android-application = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 
 # Kotlin Gradle Plugin
-androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
-androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "pagingTesting" }
-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+kotlinx-serialization-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlinGradlePlugin" }
 
 # Dagger Hilt Plugin
 dagger-hilt-android-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
@@ -74,7 +76,6 @@ dagger-hilt-android-plugin = { group = "com.google.dagger", name = "hilt-android
 androidx-navigation-safeargs = { group = "androidx.navigation", name = "navigation-safe-args-gradle-plugin", version.ref = "nav" }
 
 # Material
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesCore" }
 material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 
 # AndroidX
@@ -90,9 +91,12 @@ androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fr
 # Networking
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 # Lifecycle
 androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleExtensions" }
@@ -119,4 +123,17 @@ dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compil
 
 # Timber
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
+# Android Testing
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidTestRunner" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidTestRules" }
+androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidTestExt" }
+androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+androidx-test-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
+androidx-test-espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "espresso" }
+androidx-fragment-testing = { module = "androidx.fragment:fragment-testing", version.ref = "fragmentKtx" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesCore" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "pagingTesting" }

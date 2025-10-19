@@ -29,12 +29,10 @@ class PeopleViewModel @Inject constructor(
 
     private fun fetchPerson() {
         viewModelScope.launch {
-            repository.fetchPersonDetails(peopleID).collect { resource ->
-                when (resource) {
-                    is Resource.Error -> {}
-                    is Resource.Success -> {
-                        _state.value = PersonState.PersonDetail(resource.data)
-                    }
+            when (val resource = repository.fetchPersonDetails(personId = peopleID)) {
+                is Resource.Error -> {}
+                is Resource.Success -> {
+                    _state.value = PersonState.PersonDetail(resource.data)
                 }
             }
         }

@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'kotlinx-serialization'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
 }
@@ -14,7 +15,7 @@ android {
     compileSdk 35
     defaultConfig {
         namespace "com.davidbronn.movietmdb"
-        minSdk 23
+        minSdk 24
         targetSdk 35
         versionCode 1
         versionName "1.0.0"
@@ -26,7 +27,7 @@ android {
         buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
         buildConfigField("String", "MOVIE_API_KEY", "\"$apiKey\"")
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.davidbronn.movietmdb.MovieTmdbTestRunner"
     }
 
     buildTypes {
@@ -69,10 +70,13 @@ dependencies {
     implementation libs.hilt.android
     kapt libs.dagger.hilt.android.compiler
 
-    // Networking
-    implementation libs.retrofit
-    implementation libs.converter.gson
-    implementation libs.logging.interceptor
+    // Networking - Ktor
+    implementation libs.ktor.client.core
+    implementation libs.ktor.client.android
+    implementation libs.ktor.client.content.negotiation
+    implementation libs.ktor.serialization.kotlinx.json
+    implementation libs.ktor.client.logging
+    implementation libs.kotlinx.serialization.json
 
     // Paging Dependencies
     implementation libs.androidx.paging.runtime.ktx
@@ -100,5 +104,17 @@ dependencies {
     testImplementation libs.androidx.core.testing
     testImplementation libs.turbine
 
-    implementation libs.gson
+    // Android Instrumentation Testing
+    androidTestImplementation libs.androidx.test.runner
+    androidTestImplementation libs.androidx.test.rules
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.androidx.test.espresso.core
+    androidTestImplementation libs.androidx.test.espresso.contrib
+    androidTestImplementation libs.androidx.test.espresso.intents
+    androidTestImplementation libs.androidx.fragment.testing
+    androidTestImplementation libs.hilt.android.testing
+    androidTestImplementation libs.mockito.core
+    androidTestImplementation libs.mockito.kotlin
+    kaptAndroidTest libs.dagger.hilt.android.compiler
+
 }

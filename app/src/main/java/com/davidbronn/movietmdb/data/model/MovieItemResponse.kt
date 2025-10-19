@@ -1,63 +1,66 @@
 package com.davidbronn.movietmdb.data.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class MovieItemResponse(
 
-    @field:SerializedName("page")
+    @SerialName("page")
 	val page: Int = 0,
 
-    @field:SerializedName("total_pages")
+    @SerialName("total_pages")
 	val totalPages: Int = 0,
 
-    @field:SerializedName("results")
+    @SerialName("results")
 	val results: List<ResultsItemResponse> = emptyList(),
 
-    @field:SerializedName("total_results")
+    @SerialName("total_results")
 	val totalResults: Int = 0
 )
 
+@Serializable
 data class ResultsItemResponse(
 
-    @field:SerializedName("overview")
+    @SerialName("overview")
     val overview: String = "",
 
-    @field:SerializedName("original_language")
+    @SerialName("original_language")
     val originalLanguage: String = "",
 
-    @field:SerializedName("original_title")
+    @SerialName("original_title")
     val originalTitle: String = "",
 
-    @field:SerializedName("video")
+    @SerialName("video")
     val video: Boolean = false,
 
-    @field:SerializedName("title")
+    @SerialName("title")
     val title: String = "",
 
-    @field:SerializedName("genre_ids")
+    @SerialName("genre_ids")
     val genreIds: List<Int> = emptyList(),
 
-    @field:SerializedName("poster_path")
+    @SerialName("poster_path")
     val posterPath: String? = null,
 
-    @field:SerializedName("backdrop_path")
+    @SerialName("backdrop_path")
     val backdropPath: String = "",
 
-    @field:SerializedName("release_date")
+    @SerialName("release_date")
     val releaseDate: String = "",
 
-    @field:SerializedName("popularity")
+    @SerialName("popularity")
     val popularity: Double = 0.0,
 
-    @field:SerializedName("vote_average")
+    @SerialName("vote_average")
     val voteAverage: Double = 0.0,
 
-    @field:SerializedName("id")
+    @SerialName("id")
     val id: Int = -1,
 
-    @field:SerializedName("adult")
+    @SerialName("adult")
     val adult: Boolean = false,
 
-    @field:SerializedName("vote_count")
+    @SerialName("vote_count")
     val voteCount: Int = -1
 )

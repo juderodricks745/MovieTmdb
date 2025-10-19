@@ -1,27 +1,30 @@
 package com.davidbronn.movietmdb.data.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class MovieCredit(
 
-    @field:SerializedName("cast")
+    @SerialName("cast")
     val cast: List<CastItem> = emptyList(),
 
-    @field:SerializedName("id")
+    @SerialName("id")
     val id: Int = -1
 )
 
+@Serializable
 data class CastItem(
 
-    @field:SerializedName("character")
+    @SerialName("character")
     val character: String = "",
 
-    @field:SerializedName("name")
+    @SerialName("name")
     val name: String = "",
 
-    @field:SerializedName("profile_path")
+    @SerialName("profile_path")
     val profilePath: String? = null,
 
-    @field:SerializedName("id")
+    @SerialName("id")
     val id: Int = -1,
 )

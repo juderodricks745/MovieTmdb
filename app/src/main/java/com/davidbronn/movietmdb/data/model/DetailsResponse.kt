@@ -1,39 +1,42 @@
 package com.davidbronn.movietmdb.data.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class DetailsResponse(
 
-    @field:SerializedName("title")
+    @SerialName("title")
     var title: String = "",
 
-    @field:SerializedName("backdrop_path")
+    @SerialName("backdrop_path")
     var backdropPath: String = "",
 
-    @field:SerializedName("genres")
+    @SerialName("genres")
     var genres: List<GenresItem> = emptyList(),
 
-    @field:SerializedName("id")
+    @SerialName("id")
     var id: Int = -1,
 
-    @field:SerializedName("overview")
+    @SerialName("overview")
     var overview: String = "",
 
-    @field:SerializedName("runtime")
+    @SerialName("runtime")
     var runtime: Int = 0,
 
-    @field:SerializedName("poster_path")
+    @SerialName("poster_path")
     var posterPath: String = "",
 
-    @field:SerializedName("release_date")
+    @SerialName("release_date")
     var releaseDate: String = "",
 
-    @field:SerializedName("tagline")
+    @SerialName("tagline")
     var tagline: String = "",
 )
 
+@Serializable
 data class GenresItem(
 
-    @field:SerializedName("name")
+    @SerialName("name")
     var name: String = ""
 )

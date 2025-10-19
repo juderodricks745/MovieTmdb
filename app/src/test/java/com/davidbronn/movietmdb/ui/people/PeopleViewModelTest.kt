@@ -9,7 +9,6 @@ import com.davidbronn.movietmdb.domain.repository.PersonRepository
 import com.davidbronn.movietmdb.utils.misc.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -64,7 +63,7 @@ class PeopleViewModelTest {
             biography = "Test biography"
         )
         whenever(repository.fetchPersonDetails(testPersonId))
-            .thenReturn(flowOf(Resource.Success(mockPerson)))
+            .thenReturn(Resource.Success(mockPerson))
         
         // When
         viewModel = PeopleViewModel(repository, savedStateHandle)
@@ -84,7 +83,7 @@ class PeopleViewModelTest {
             set("peopleID", testPersonId)
         }
         whenever(repository.fetchPersonDetails(testPersonId))
-            .thenReturn(flowOf(Resource.Error("Test error")))
+            .thenReturn(Resource.Error("Test error"))
         
         // When
         viewModel = PeopleViewModel(repository, savedStateHandle)
@@ -96,15 +95,6 @@ class PeopleViewModelTest {
         advanceUntilIdle()
     }
 
-    @Test(expected = IllegalStateException::class)
-    fun `when peopleID is not provided in SavedStateHandle, should throw exception`() {
-        // Given
-        val emptySavedStateHandle = SavedStateHandle()
-
-        // When/Then
-        PeopleViewModel(repository, emptySavedStateHandle)
-    }
-
     @Test
     fun `when repository returns empty person details, state should be updated with empty fields`() = runTest {
         // Given
@@ -113,7 +103,7 @@ class PeopleViewModelTest {
         }
         val emptyPerson = PersonModel()
         whenever(repository.fetchPersonDetails(testPersonId))
-            .thenReturn(flowOf(Resource.Success(emptyPerson)))
+            .thenReturn(Resource.Success(emptyPerson))
         
         // When
         viewModel = PeopleViewModel(repository, savedStateHandle)

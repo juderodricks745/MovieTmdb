@@ -10,7 +10,7 @@ import com.davidbronn.movietmdb.domain.repository.DetailsRepository
 import com.davidbronn.movietmdb.utils.misc.Resource
 import com.davidbronn.movietmdb.utils.misc.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,30 +27,32 @@ class DetailsViewModel @Inject constructor(
 
     fun fetchAllMovieDetails() {
         viewModelScope.launch {
-            combine(
-                repository.fetchMovieDetails(movieID),
-                repository.fetchSimilarMovies(movieID),
-                repository.fetchMoviesCast(movieID),
-            ) { movieDetailResource, similarMoviesResource, movieCastsResource ->
-                Triple(movieDetailResource, similarMoviesResource, movieCastsResource)
-            }.collect { (movieDetail, similarMovies, movieCasts) ->
-                when (movieDetail) {
-                    is Resource.Error -> {}
-                    is Resource.Success -> {
-                        _state.value = DetailsState.MovieDetail(movieDetail.data)
-                    }
+            val movieDetailDeferred = async { repository.fetchMovieDetails(movieID) }
+            val similarMoviesDeferred = async { repository.fetchSimilarMovies(movieID) }
+            val movieCastsDeferred = async { repository.fetchMoviesCast(movieID) }
+
+            val movieDetail = movieDetailDeferred.await()
+            val similarMovies = similarMoviesDeferred.await()
+            val movieCasts = movieCastsDeferred.await()
+
+            when (movieDetail) {
+                is Resource.Error -> {}
+                is Resource.Success -> {
+                    _state.value = DetailsState.MovieDetail(detail = movieDetail.data)
                 }
-                when (similarMovies) {
-                    is Resource.Error -> {}
-                    is Resource.Success -> {
-                        _state.value = DetailsState.SimilarMovies(similarMovies.data)
-                    }
+            }
+
+            when (similarMovies) {
+                is Resource.Error -> {}
+                is Resource.Success -> {
+                    _state.value = DetailsState.SimilarMovies(models = similarMovies.data)
                 }
-                when (movieCasts) {
-                    is Resource.Error -> {}
-                    is Resource.Success -> {
-                        _state.value = DetailsState.MovieCasts(movieCasts.data)
-                    }
+            }
+
+            when (movieCasts) {
+                is Resource.Error -> {}
+                is Resource.Success -> {
+                    _state.value = DetailsState.MovieCasts(castModels = movieCasts.data)
                 }
             }
         }

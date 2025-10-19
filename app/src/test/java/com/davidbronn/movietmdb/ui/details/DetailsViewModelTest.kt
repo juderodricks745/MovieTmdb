@@ -9,7 +9,6 @@ import com.davidbronn.movietmdb.domain.repository.DetailsRepository
 import com.davidbronn.movietmdb.utils.misc.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -88,9 +87,9 @@ class DetailsViewModelTest {
             )
         )
 
-        whenever(repository.fetchMovieDetails(movieId)).thenReturn(flowOf(Resource.Success(movieDetail)))
-        whenever(repository.fetchSimilarMovies(movieId)).thenReturn(flowOf(Resource.Success(similarMovies)))
-        whenever(repository.fetchMoviesCast(movieId)).thenReturn(flowOf(Resource.Success(movieCasts)))
+        whenever(repository.fetchMovieDetails(movieId)).thenReturn(Resource.Success(movieDetail))
+        whenever(repository.fetchSimilarMovies(movieId)).thenReturn(Resource.Success(similarMovies))
+        whenever(repository.fetchMoviesCast(movieId)).thenReturn(Resource.Success(movieCasts))
 
         // When
         viewModel.fetchAllMovieDetails()
@@ -124,9 +123,9 @@ class DetailsViewModelTest {
     @Test
     fun `when repository returns error for movie details, state should not be updated`() = runTest {
         // Given
-        whenever(repository.fetchMovieDetails(movieId)).thenReturn(flowOf(Resource.Error("Error fetching details")))
-        whenever(repository.fetchSimilarMovies(movieId)).thenReturn(flowOf(Resource.Success(emptyList())))
-        whenever(repository.fetchMoviesCast(movieId)).thenReturn(flowOf(Resource.Success(emptyList())))
+        whenever(repository.fetchMovieDetails(movieId)).thenReturn(Resource.Error("Error fetching details"))
+        whenever(repository.fetchSimilarMovies(movieId)).thenReturn(Resource.Success(emptyList()))
+        whenever(repository.fetchMoviesCast(movieId)).thenReturn(Resource.Success(emptyList()))
 
         // When
         viewModel.fetchAllMovieDetails()

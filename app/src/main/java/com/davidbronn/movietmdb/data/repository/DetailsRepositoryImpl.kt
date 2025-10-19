@@ -8,53 +8,42 @@ import com.davidbronn.movietmdb.domain.model.CastItemModel
 import com.davidbronn.movietmdb.domain.model.DetailsModel
 import com.davidbronn.movietmdb.domain.qualifier.IoDispatcher
 import com.davidbronn.movietmdb.domain.repository.DetailsRepository
-import com.davidbronn.movietmdb.utils.extensions.catchWithDispatcher
-import com.davidbronn.movietmdb.utils.extensions.mapErrorResponse
 import com.davidbronn.movietmdb.utils.extensions.mapItems
-import com.davidbronn.movietmdb.utils.extensions.mapResponse
+import com.davidbronn.movietmdb.utils.extensions.safeApiCall
 import com.davidbronn.movietmdb.utils.misc.Mapper
 import com.davidbronn.movietmdb.utils.misc.Resource
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
  * Created by Jude on 12/January/2020
  */
 class DetailsRepositoryImpl @Inject constructor(
-    @IoDispatcher private val provider: CoroutineDispatcher,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
     private val api: DetailsApi,
     private val detailMapper: Mapper<DetailsResponse, DetailsModel>,
     private val castMapperModel: Mapper<CastItem, CastItemModel>,
-    private val moviesMapper: Mapper<ResultsItemResponse, CastItemModel>,
-    private val gson: Gson
+    private val moviesMapper: Mapper<ResultsItemResponse, CastItemModel>
 ) : DetailsRepository {
 
-    override fun fetchMoviesCast(movieId: Int) = flow {
-        val response = api.fetchMoviesCreditAsync(movieId)
-        if (response.isSuccessful) {
-            val moviesCast =
-                response.body()?.cast?.mapItems(castMapperModel) { it.profilePath.isNullOrBlank().not() } ?: emptyList()
-            emit(Resource.Success(moviesCast))
-        } else {
-            emit(Resource.Error(response.mapErrorResponse(gson)))
+    override suspend fun fetchMoviesCast(movieId: Int): Resource<List<CastItemModel>> {
+        return safeApiCall(dispatcher) {
+            val response = api.fetchMoviesCreditAsync(movieId)
+            response.cast.mapItems(castMapperModel) { it.profilePath.isNullOrBlank().not() }
         }
-    }.catchWithDispatcher(provider)
+    }
 
-    override fun fetchSimilarMovies(movieId: Int) = flow {
-        val response = api.fetchSimilarMoviesAsync(movieId)
-        if (response.isSuccessful) {
-            val moviesCast =
-                response.body()?.results?.mapItems(moviesMapper) { !it.posterPath.isNullOrBlank() } ?: emptyList()
-            emit(Resource.Success(moviesCast))
-        } else {
-            emit(Resource.Error(response.mapErrorResponse(gson)))
+    override suspend fun fetchSimilarMovies(movieId: Int): Resource<List<CastItemModel>> {
+        return safeApiCall(dispatcher) {
+            val response = api.fetchSimilarMoviesAsync(movieId)
+            response.results.mapItems(moviesMapper) { !it.posterPath.isNullOrBlank() }
         }
-    }.catchWithDispatcher(provider)
+    }
 
-    override fun fetchMovieDetails(movieId: Int) = flow {
-        val response = api.fetchMovieDetailsAsync(movieId)
-        emit(response.mapResponse(detailMapper, gson))
-    }.catchWithDispatcher(provider)
+    override suspend fun fetchMovieDetails(movieId: Int): Resource<DetailsModel> {
+        return safeApiCall(dispatcher) {
+            val response = api.fetchMovieDetailsAsync(movieId)
+            detailMapper.map(response)
+        }
+    }
 }

@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.davidbronn.movietmdb.data.mapper.MovieMapper
 import com.davidbronn.movietmdb.domain.api.MoviesApi
 import com.davidbronn.movietmdb.domain.model.ItemModel
-import retrofit2.HttpException
+import io.ktor.client.plugins.*
 import java.io.IOException
 
 /**
@@ -21,7 +21,7 @@ class MoviesPagingSource(
         val pageNumber = params.key ?: 1
         return try {
             val response = moviesApi.fetchPopularMoviesAsync(pageNumber)
-            val results = response.body()?.results ?: emptyList()
+            val results = response.results
             val movieResults = results.filter { it.posterPath != null }.map { movieMapper.map(it) }
             LoadResult.Page(
                 data = movieResults,
@@ -30,7 +30,9 @@ class MoviesPagingSource(
             )
         } catch (exception: IOException) {
             LoadResult.Error(exception)
-        } catch (exception: HttpException) {
+        } catch (exception: ClientRequestException) {
+            LoadResult.Error(exception)
+        } catch (exception: ServerResponseException) {
             LoadResult.Error(exception)
         }
     }

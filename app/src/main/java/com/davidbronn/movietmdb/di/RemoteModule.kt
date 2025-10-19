@@ -5,13 +5,18 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.ANDROID
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.headers
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
 /**
@@ -25,47 +30,38 @@ class RemoteModule {
     fun provideBaseUrl(): String = BuildConfig.BASE_URL
 
     @Provides
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        if (BuildConfig.DEBUG) {
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        } else {
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
-        }
-        return httpLoggingInterceptor
-    }
-
-    @Provides
-    @Named("QueryInterceptor")
-    internal fun provideAuthInterceptor(): Interceptor {
-        return Interceptor { chain ->
-            val originalRequest: Request = chain.request()
-            val requestBuilder: Request.Builder = originalRequest.newBuilder()
-                .header("accept", "application/json")
-                .header("Authorization", "Bearer ${BuildConfig.MOVIE_API_KEY}")
-            val newRequest: Request = requestBuilder.build()
-            chain.proceed(newRequest)
-        }
-    }
-
-    @Provides
-    fun provideOkHttpAuth(
-        loggingInterceptor: HttpLoggingInterceptor,
-        @Named("QueryInterceptor") queryInterceptor: Interceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(queryInterceptor)
-            .retryOnConnectionFailure(true)
-            .build()
+    @Singleton
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+        encodeDefaults = true
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    fun provideHttpClient(json: Json): HttpClient {
+        return HttpClient(Android) {
+            install(ContentNegotiation) {
+                json(json)
+            }
+            
+            install(Logging) {
+                level = if (BuildConfig.DEBUG) LogLevel.BODY else LogLevel.NONE
+                logger = Logger.ANDROID
+            }
+            
+            install(DefaultRequest) {
+                headers {
+                    append("accept", "application/json")
+                    append("Authorization", "Bearer ${BuildConfig.MOVIE_API_KEY}")
+                }
+            }
+            
+            install(HttpTimeout) {
+                requestTimeoutMillis = 30_000
+                connectTimeoutMillis = 30_000
+                socketTimeoutMillis = 30_000
+            }
+        }
+    }
 }
